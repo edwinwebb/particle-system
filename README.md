@@ -1,4 +1,4 @@
-# Rainbow Ribbon
+# Particle Tests
 
 A quick project to investigate multitouch
 

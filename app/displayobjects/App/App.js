@@ -5,11 +5,6 @@ import Vector from '../Vector/Vector.js';
 
 /**
  * Main App Display Object
- *
- * Adds a background and some bunnies to it's self
- *
- * @exports App
- * @extends ScaledContainer
  */
 
 export default class App extends PIXI.Container {
@@ -41,6 +36,7 @@ export default class App extends PIXI.Container {
   }
 
   mousedown(e) {
+    this.emitter.start();
     this.tracking = true;
   }
 
@@ -53,6 +49,7 @@ export default class App extends PIXI.Container {
 
   mouseup(e) {
     this.tracking = false;
+    this.emitter.stop();
   }
 
 

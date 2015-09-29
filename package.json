@@ -1,8 +1,8 @@
 {
-  "name": "rainbow-ribbon",
+  "name": "particle-system",
   "version": "0.1.0",
-  "repository": "https://github.com/edwinwebb/rainbow-ribbon",
-  "description": "Multi touch experiment",
+  "repository": "https://github.com/edwinwebb/particle-system",
+  "description": "Playing aroudn with a particle system",
   "config": {
     "buildDir": "./build",
     "stageWidth": 1920,

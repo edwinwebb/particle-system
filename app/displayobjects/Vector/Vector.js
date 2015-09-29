@@ -1,5 +1,3 @@
-'use strict';
-
 import {Point} from 'pixi.js';
 import V from './Vector.js';
 
