@@ -28,7 +28,7 @@ export default class Particle extends Sprite {
 
   draw() {
     var g = new Graphics();
-    g.beginFill(0xFF0000, 1);
+    g.beginFill(0xFF0000, .5);
     g.drawRect(-1,-1,2,2);
     g.endFill();
 

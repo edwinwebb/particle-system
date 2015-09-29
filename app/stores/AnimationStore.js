@@ -26,7 +26,7 @@ class AnimationStore extends EventEmitter {
     this.data.startTime = window.performance.now();
     this.data.currentTime = window.performance.now();
 
-    this.setMaxListeners(1000);
+    this.setMaxListeners(10000);
   }
 
   get(key) {

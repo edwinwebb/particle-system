@@ -1,8 +1,9 @@
 'use strict';
 
-import PIXI from 'pixi.js';
+import {Point} from 'pixi.js';
+import V from './Vector.js';
 
-export default class Vector extends PIXI.Point {
+export default class Vector extends Point {
 
   constructor(...args) {
     super(...args);
@@ -15,11 +16,11 @@ export default class Vector extends PIXI.Point {
   }
 
   subtract(p) {
-    return new PIXI.Point(this.x + p.x, this.y + p.y);
+    return new V(this.x + p.x, this.y + p.y);
   }
 
   negative() {
-    return new PIXI.Point(-this.x, -this.y);
+    return new V(-this.x, -this.y);
   }
 
 }
