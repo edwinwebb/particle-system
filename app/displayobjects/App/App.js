@@ -2,7 +2,9 @@ import PIXI from 'pixi.js';
 import RendererStore from '../../stores/RendererStore.js';
 import Emitter from '../Emitter/Emitter.js';
 import Vector from '../Vector/Vector.js';
-import Sparkle from '../Sparkle/Sparkle.js';
+import Sparkle from '../PinkSparkle/PinkSparkle.js';
+import BlueSparkle from '../BlueSparkle/BlueSparkle.js';
+import AnimationStore from '../../stores/AnimationStore.js';
 
 let emtters = new Set();
 
@@ -29,6 +31,33 @@ export default class App extends PIXI.Container {
     this.drawBg();
 
     this.emitter.start();
+
+    this.addCircle();
+
+    // AnimationStore.addChangeListener(this.update.bind(this));
+
+  }
+
+  addCircle(x,y) {
+    let t = [];
+    let c = 50;
+    let offset = Math.random() * 50;
+    let size = 5;
+    let centerX = x;
+    let centerY = y;
+
+    for(let i = 0; i < c; i++){
+      let p = new BlueSparkle();
+      let angle = 2 * Math.PI / c * (i + offset);
+      p.position.x = centerX + size  * Math.cos(angle);
+      p.position.y = centerY + size  * Math.sin(angle);
+      p.velocity.x = Math.cos(angle);
+      p.velocity.y = Math.sin(angle);
+      p.lifeSpan = 2000;
+      p.rotation = Math.PI * Math.random() * 2;
+      this.addChild(p);
+    }
+
   }
 
   addEmitter() {
@@ -53,8 +82,10 @@ export default class App extends PIXI.Container {
   }
 
   mousedown(e) {
+    let pos = e.data.getLocalPosition(this);
     this.emitter.start();
     this.tracking = true;
+    this.addCircle(pos.x  / RendererStore.get("resolution"),pos.y / RendererStore.get("resolution"));
   }
 
   mousemove(e) {
@@ -66,7 +97,7 @@ export default class App extends PIXI.Container {
 
   mouseup(e) {
     this.tracking = false;
-    this.emitter.stop();
+    //this.emitter.stop();
   }
 
   touchmove(e) {
