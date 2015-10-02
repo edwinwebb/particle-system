@@ -2,6 +2,9 @@ import PIXI from 'pixi.js';
 import RendererStore from '../../stores/RendererStore.js';
 import Emitter from '../Emitter/Emitter.js';
 import Vector from '../Vector/Vector.js';
+import Sparkle from '../Sparkle/Sparkle.js';
+
+let emtters = new Set();
 
 /**
  * Main App Display Object
@@ -16,7 +19,8 @@ export default class App extends PIXI.Container {
     this.tracking = false;
     this.graphics = new PIXI.Graphics();
 
-    this.emitter = new Emitter();
+    this.emitter = new Emitter(Sparkle);
+    this.emitter.emitStep = 10;
     this.addChild(this.emitter);
     this.addChild(this.graphics);
 
@@ -25,6 +29,19 @@ export default class App extends PIXI.Container {
     this.drawBg();
 
     this.emitter.start();
+  }
+
+  addEmitter() {
+    var emitter = new Emiiter();
+    this.addChild(emitter);
+    emitters.add(emitter.id);
+    emitter.start();
+  }
+
+  removeEmitter(emitter) {
+    emitter.stop();
+    emitters.remove(emitter);
+    this.removeChild(emitter);
   }
 
   drawBg() {
@@ -43,13 +60,17 @@ export default class App extends PIXI.Container {
   mousemove(e) {
     if(this.tracking) {
       let pos = e.data.getLocalPosition(this);
-      this.emitter.currentPosition = new Vector(pos.x,pos.y);
+      this.emitter.currentPosition = new Vector(pos.x  / RendererStore.get("resolution"),pos.y / RendererStore.get("resolution"));
     }
   }
 
   mouseup(e) {
     this.tracking = false;
     this.emitter.stop();
+  }
+
+  touchmove(e) {
+
   }
 
 

@@ -1,13 +1,14 @@
 import PIXI from 'pixi.js';
-import Particle from '../Particle/Particle.js';
 import Vector from '../Vector/Vector.js';
 
 export default class Emitter extends PIXI.Container {
 
-  constructor() {
+  constructor(particle) {
     super();
     this.currentPosition = new Vector(0,0);
     this.emitStep = 5;
+    this.id = Symbol("emitter");
+    this.particle = particle;
   }
 
   start() {
@@ -22,7 +23,7 @@ export default class Emitter extends PIXI.Container {
   }
 
   emit() {
-    var p = new Particle();
+    var p = new this.particle();
     p.velocity.y = (-2 * Math.random()) + 1;
     p.velocity.x = (-2 * Math.random()) + 1;
     p.position = new Vector(this.currentPosition.x,this.currentPosition.y);

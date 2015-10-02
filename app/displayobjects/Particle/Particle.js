@@ -5,7 +5,7 @@
  * @extends Sprite
  */
 
-import {Sprite, Graphics} from 'pixi.js';
+import {Sprite} from 'pixi.js';
 import AnimationStore from '../../stores/AnimationStore.js';
 import Vector from '../Vector/Vector.js';
 
@@ -21,18 +21,7 @@ export default class Particle extends Sprite {
     this.anchor = new PIXI.Point(.5,.5);
     this.lifeSpan = 1000;
 
-    this.draw();
-
     AnimationStore.addChangeListener(this.update.bind(this));
-  }
-
-  draw() {
-    var g = new Graphics();
-    g.beginFill(0xFF0000, .5);
-    g.drawRect(-1,-1,2,2);
-    g.endFill();
-
-    this.addChild(g);
   }
 
   update(e) {
@@ -43,6 +32,12 @@ export default class Particle extends Sprite {
 
     this.velocity = this.velocity.add(this.acceleration);
     this.position = this.position.add(this.velocity);
+
+    this.postUpdate(e);
+  }
+
+  postUpdate() {
+
   }
 
   kill() {
