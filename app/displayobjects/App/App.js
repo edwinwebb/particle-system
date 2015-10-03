@@ -4,7 +4,9 @@ import Emitter from '../Emitter/Emitter.js';
 import Vector from '../Vector/Vector.js';
 import Sparkle from '../PinkSparkle/PinkSparkle.js';
 import BlueSparkle from '../BlueSparkle/BlueSparkle.js';
+import RedSparkle from '../RedSparkle/RedSparkle.js';
 import AnimationStore from '../../stores/AnimationStore.js';
+import Explosion from '../Explosion/Explosion.js';
 
 let emtters = new Set();
 
@@ -21,7 +23,7 @@ export default class App extends PIXI.Container {
     this.tracking = false;
     this.graphics = new PIXI.Graphics();
 
-    this.emitter = new Emitter(Sparkle);
+    this.emitter = new Emitter(RedSparkle);
     this.emitter.emitStep = 10;
     this.addChild(this.emitter);
     this.addChild(this.graphics);
@@ -33,6 +35,11 @@ export default class App extends PIXI.Container {
     this.emitter.start();
 
     this.addCircle();
+
+    let x = new Explosion();
+    x.position = new Vector(RendererStore.get('width') / 2,RendererStore.get('height') / 2)
+
+    this.addChild(x);
 
     // AnimationStore.addChangeListener(this.update.bind(this));
 
