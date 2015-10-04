@@ -7,6 +7,7 @@ import BlueSparkle from '../BlueSparkle/BlueSparkle.js';
 import RedSparkle from '../RedSparkle/RedSparkle.js';
 import AnimationStore from '../../stores/AnimationStore.js';
 import Explosion from '../Explosion/Explosion.js';
+import PinkSparkle from '../PinkSparkle/PinkSparkle.js';
 
 let emtters = new Set();
 
@@ -23,12 +24,18 @@ export default class App extends PIXI.Container {
     this.tracking = false;
     this.graphics = new PIXI.Graphics();
 
-    this.emitter = new Emitter(RedSparkle);
+    this.emitter = new Emitter(RedSparkle, this);
     this.emitter.emitStep = 10;
-    this.addChild(this.emitter);
-    this.addChild(this.graphics);
-
     this.emitter.currentPosition = new Vector(RendererStore.get('width') / 2,RendererStore.get('height') / 2);
+    this.emitter.on('emit', function(p) {
+      p.velocity.y = (-2 * Math.random()) + 1;
+      p.velocity.x = (-2 * Math.random()) + 1;
+      p.position = new Vector(this.currentPosition.x,this.currentPosition.y);
+      p.acceleration.y = .01;
+      p.lifeSpan = 3000;
+    });
+
+    this.addChild(this.graphics);
 
     this.drawBg();
 
@@ -41,8 +48,21 @@ export default class App extends PIXI.Container {
 
     this.addChild(x);
 
-    // AnimationStore.addChangeListener(this.update.bind(this));
+    this.addAnotherEmitter();
 
+  }
+
+  addAnotherEmitter() {
+    var e = new Emitter(PinkSparkle, this);
+    var sw = RendererStore.get('width');
+    var sh = RendererStore.get('height');
+
+    e.on('emit', function(p) {
+      p.position = new Vector(sw * Math.random(), sh);
+      p.velocity = new Vector(0, -2);
+    });
+
+    e.start();
   }
 
   addCircle(x,y) {
@@ -67,18 +87,18 @@ export default class App extends PIXI.Container {
 
   }
 
-  addEmitter() {
-    var emitter = new Emiiter();
-    this.addChild(emitter);
-    emitters.add(emitter.id);
-    emitter.start();
-  }
-
-  removeEmitter(emitter) {
-    emitter.stop();
-    emitters.remove(emitter);
-    this.removeChild(emitter);
-  }
+  // addEmitter() {
+  //   var emitter = new Emiiter();
+  //   this.addChild(emitter);
+  //   emitters.add(emitter.id);
+  //   emitter.start();
+  // }
+  //
+  // removeEmitter(emitter) {
+  //   emitter.stop();
+  //   emitters.remove(emitter);
+  //   this.removeChild(emitter);
+  // }
 
   drawBg() {
     var g = this.graphics;

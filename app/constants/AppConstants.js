@@ -1,4 +1,5 @@
 export const constants = {
   RESIZE: 'APP_RESIZE',
-  ANIMATE: 'APP_ANIMATE'
+  ANIMATE: 'APP_ANIMATE',
+  'PEMIT' : 'PARTICLE_EMITTED'
 }
